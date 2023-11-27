@@ -1,0 +1,17 @@
+<!doctype html>
+<title>BLHA Application<title>
+<link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css') }} />
+<div class=page>
+  <h1><a href="{{ url_for('homepage') }}">BLHA Application</a></h1>
+  <div class=metanav>
+  {% if not session.logged_in %}
+    <a href="{{ url_for('login') }}">Log in</a>
+  {% else %}
+    <a href="{{ url_for('login') }}" >Show user</a>
+    <a href="{{ url_for('create') }}">Create user</a>
+    <a href="{{ url_for('loout') }}" >Log out</a>
+  {% endif %}
+  </div>
+  {% block body %}
+  {% endblock %}
+</div>
