@@ -6,38 +6,25 @@ from flask import request
 from flask import session
 from flask import url_for, abort, render_template, flash
 from functools import wraps
-from haslib import md5
+from hashlib import md5
 from peewee import *
+import requests
 
 ### config part 
-DATABASE = 'user_database.db'
-DEBUG = True
+PORT     = 8002
+DEBUG    = True
+ADPW     = 'TestLauf'
 ### config done
 
 
 appfe = Flask(__name__)
 appfe.config.from_object(__name__)
 
-database = SqliteDatabase(DATABASE)
-
-# virutal class model, as simple interface if in future multiple tables needed
-class BaseModel(Model):
-    class Meta:
-        database = database
-
-# implement a basic user
-class User(BaseModel):
-    username = CharField(unique = True)
-    password = CharField()
-
-def create_tables():
-    with database:
-        database.create_tables([User])
 
 def auth_user(user):
     session['logged_in'] = True
-    session['user_id'] = user.id
-    session['username'] = user.username
+    session['user_id']   = user.id
+    session['username']  = user.username
 
     flash('You are logged in as %s.' % (user.username) )
 
@@ -55,25 +42,32 @@ def login_required(f):
 
 ### appfe code
 
-@appfe.before_request
-def before_request():
-    g.db = database
-    g.db.connect()
-
-@appfe.after_request
-def after_request(response):
-    g.db.close()
-    return response
-
-# views
-
 @appfe.route('/')
 def homepage():
-    #if session.get('logged_in'):
+    if session.get('logged_in'):
+        return user_list()
+    else:
+        return user_list()
+
+@appfe.route('/users/')
+def user_list():
     
+    users = requests.get('http://127.0.0.1:8001/users/')
+    return render_template('user_list.html', jsnObj=users.json() )
+
     
-@appfe.route('/login/', method=['GET', 'POST'])
+@appfe.route('/login/', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST' and request.form['username']:
+        try:
+            print ( 'Login process....')
+        except User.DoesNotExist:
+            flash('The password entered is incorrect')
+        else:
+            auth_user(user)
+            return redirect(url_for('homepage'))
+
+    return render_template('login.html')
 
 
 @appfe.route('/logout/')
@@ -83,3 +77,5 @@ def logout():
     return redirect(url_for('homepage'))
 
 
+if __name__ == '__main__':
+    appfe.run( debug = DEBUG, port = PORT )
