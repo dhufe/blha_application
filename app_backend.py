@@ -1,12 +1,19 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
+from flask import g
 from peewee import *
 
 
 appbe = Flask ( __name__ )
+appbe.config.from_object(__name__)
 api = Api(appbe)
 
-db = SqliteDatabase('database.db')
+
+DATABASE = 'database.db'
+PORT     = 8001
+
+
+db = SqliteDatabase( DATABASE )
 
 # Database model for user entries
 
@@ -48,6 +55,14 @@ class UserList(Resource):
 api.add_resource(UserList, '/users/' )
 
 if __name__ == '__main__':
-    appbe.run( debug = True )
+    appbe.run( debug = True, port = PORT )
     
 
+@appbe.before_request
+def before_request():
+    g.db = database
+    g.db.connect()
+
+@appbe.after_request
+def after_request(response):
+    g.db.close()
