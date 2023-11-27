@@ -11,6 +11,7 @@ api = Api(appbe)
 
 DATABASE = 'database.db'
 PORT     = 8001
+DEBUG    = True
 
 
 db = SqliteDatabase( DATABASE )
@@ -55,7 +56,7 @@ class UserList(Resource):
 api.add_resource(UserList, '/users/' )
 
 if __name__ == '__main__':
-    appbe.run( debug = True, port = PORT )
+    appbe.run( debug = DEBUG, port = PORT )
     
 
 @appbe.before_request
