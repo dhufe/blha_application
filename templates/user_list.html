@@ -1,9 +1,9 @@
-{% extends layout.html %}
+{% extends "layout.html" %}
 {% block body %}
   <h2>Users:</h2>
   <ul>
-    {% for user in user_list %}
-      <li>{{ user.username }}<li>
+    {% for j in jsnObj %}
+      <li>{{j['username']}}</li>
     {% endfor %}
   </ul>
 {% endblock %}
