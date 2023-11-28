@@ -27,6 +27,11 @@ class Users(Model):
 # Connect to database
 db.connect()
 
+
+def create_table():
+    with db:
+        db.create_tables([Users])
+
 # function interface to ORM model 
 # create an user with given password
 def insertUser ( username, password ):
@@ -34,6 +39,8 @@ def insertUser ( username, password ):
     handle.save()
     return handle
 
+# create tables according out model
+create_table()
 
 # create some users
 insertUser ( 'hugo', 'T3stlauf')
