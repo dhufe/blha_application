@@ -9,13 +9,14 @@
 To abstract a very simple user list, the following database scheme is used:
 
 ```
-DROP TABLE IF EXISTS USERS;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE USERS ( 
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  USERNAME TEXT NOT NULL,
-  PASSWORD TEXT NOT NULL
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL,
+  password TEXT NOT NULL
 );
+
 ```
 
 For preparing the SQLITE database run the following snippet:
