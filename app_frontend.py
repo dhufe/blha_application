@@ -84,8 +84,9 @@ def create():
     if request.method == 'POST' and request.form['username']:
         payload  = {'username': request.form['username'], 'password': request.form['password'] }
         header   = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-        response = requests.post('http://127.0.0.1:8001/create/', data = payload, headers = header )
-        response.raise_for_status()
+
+        response = requests.post('http://127.0.0.1:8001/create/', json = payload, headers = header )
+        #response.raise_for_status()
 
         return redirect(url_for('homepage'))
 
