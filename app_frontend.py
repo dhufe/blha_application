@@ -49,6 +49,8 @@ def homepage():
     if session.get('logged_in'):
         return user_list()
 
+    return render_template('homepage.html')
+
 @appfe.route('/users/')
 def user_list():
     
@@ -59,7 +61,6 @@ def user_list():
 @appfe.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST' and request.form['username']:
-        print ( 'Login process....')
         response = requests.get('http://127.0.0.1:8001/users/')
         response.raise_for_status()
 
@@ -78,9 +79,17 @@ def logout():
     flash('You were logged out.')
     return redirect(url_for('homepage'))
 
-@appfe.route('/create/')
+@appfe.route('/create/', methods=['GET', 'POST'])
 def create():
-    pass
+    if request.method == 'POST' and request.form['username']:
+        payload  = {'username': request.form['username'], 'password': request.form['password'] }
+        header   = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        response = requests.post('http://127.0.0.1:8001/create/', data = payload, headers = header )
+        response.raise_for_status()
+
+        return redirect(url_for('homepage'))
+
+    return render_template('create.html')
 
 
 if __name__ == '__main__':
