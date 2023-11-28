@@ -43,6 +43,7 @@ class UserList(Resource):
     def get(self):
         return getUserList()
 
+class UserCreate(Resource):
     def post(self):
         parser.add_argument( "username" )
         parser.add_argument( "password" )
@@ -54,6 +55,8 @@ class UserList(Resource):
         return 201
 
 api.add_resource(UserList, '/users/' )
+
+api.add_resource(UserCreate, '/create/' )
 
 if __name__ == '__main__':
     appbe.run( debug = DEBUG, port = PORT )
