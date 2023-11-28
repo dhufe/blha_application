@@ -9,11 +9,13 @@ from functools import wraps
 from hashlib import md5
 from peewee import *
 import requests
+import json
+
 
 ### config part 
 PORT     = 8002
 DEBUG    = True
-ADPW     = 'TestLauf'
+SECRET_KEY = 'hin6bab8ge25*r=x&amp;+5$0kn=-#log$pt^#@vrqjld!^2ci@g*b'
 ### config done
 
 
@@ -21,12 +23,12 @@ appfe = Flask(__name__)
 appfe.config.from_object(__name__)
 
 
-def auth_user(user):
+def auth_user(username, id ):
     session['logged_in'] = True
-    session['user_id']   = user.id
-    session['username']  = user.username
+    session['user_id']   = id
+    session['username']  = username
 
-    flash('You are logged in as %s.' % (user.username) )
+    flash('You are logged in as %s.' % (username) )
 
 def get_current_user():
     if session.get('logged_in'):
@@ -46,8 +48,6 @@ def login_required(f):
 def homepage():
     if session.get('logged_in'):
         return user_list()
-    else:
-        return user_list()
 
 @appfe.route('/users/')
 def user_list():
@@ -59,22 +59,28 @@ def user_list():
 @appfe.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST' and request.form['username']:
-        try:
-            print ( 'Login process....')
-        except User.DoesNotExist:
-            flash('The password entered is incorrect')
-        else:
-            auth_user(user)
-            return redirect(url_for('homepage'))
+        print ( 'Login process....')
+        response = requests.get('http://127.0.0.1:8001/users/')
+        response.raise_for_status()
+
+        users = response.json()
+
+        for j in users:
+            if ( j['username'] == request.form['username'] and j['password'] == request.form['password'] ):
+                auth_user(j['username'], j['id'])
+                return redirect(url_for('homepage'))
 
     return render_template('login.html')
-
 
 @appfe.route('/logout/')
 def logout():
     session.pop('logged_in', None )
     flash('You were logged out.')
     return redirect(url_for('homepage'))
+
+@appfe.route('/create/')
+def create():
+    pass
 
 
 if __name__ == '__main__':
