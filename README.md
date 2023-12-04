@@ -4,6 +4,8 @@
 
 Aim of the project is to implement a simple user login system with a small set of user management features. The implementation approach should consist of a database backend system, which performs the database information exchange using object-relational mapping (ORM). For passing information between back- and frontend a Rest-API have to be realized.  
 
+![Current project infrastructure](blha_project.png)
+
 ## Getting started
 
 ### DB Scheme
