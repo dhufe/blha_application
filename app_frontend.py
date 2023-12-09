@@ -7,7 +7,7 @@ from flask import session
 from flask import url_for, abort, render_template, flash
 from functools import wraps
 from hashlib import md5
-from peewee import *
+
 import requests
 import json
 
