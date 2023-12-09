@@ -75,4 +75,12 @@ Process of creating a new user:
 
 ![Filled user creation form](screenshots/005_BLHA_CreateNewUser.png)
 
-![Upoated user list](screenshots/006_BLHA_UpdatedUserList.png)
+![Updated user list](screenshots/006_BLHA_UpdatedUserList.png)
+
+![User logout](screenshots/007_BLHA_Logout.png)
+
+## Drawbacks
+
+1. Front- and backend did not use any kind of authentication or encryption
+2. User passwords are stored and transferred in plain text
+3. Database scheme allows non-unique usernames  
