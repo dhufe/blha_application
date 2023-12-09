@@ -90,6 +90,17 @@ python3 app_frontend.py # listens on 8002
 
 6. Start your webbrowser and navigate to [http://localhost:8002](http://localhost:8002)
 
+The backend provides the user list on http://localhost:8001/users/ and the one of the default users will work for the login process.
+
+```
+hugo - T3stlauf
+daniel - p455w0rt
+birgit - ho53
+hans - t35t
+steffi - gru3n
+torsten - 5chw4rz
+```
+
 
 7. Deactivate virtual enviroment
 
