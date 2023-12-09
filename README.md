@@ -20,25 +20,24 @@ CREATE TABLE users (
   username TEXT NOT NULL,
   password TEXT NOT NULL
 );
-
 ```
 
 ## Getting started
 
 ### Dependencies 
 
-This solution relies on [Flask](https://flask.palletsprojects.com/en/3.0.x/) and [Peewee ORM](https://docs.peewee-orm.com/en/latest/) and was implemented using Python 3.9.6.
+This solution relies on [Flask](https://flask.palletsprojects.com/en/3.0.x/) and [Peewee ORM](https://docs.peewee-orm.com/en/latest/) and was implemented using Python 3.9.6. Flask is used for serverside functions and listening on ports 8001 (backend server) and 8002 (frontend server).
 
 #### Dependencies for running the backend
 
 ```
-pip3 install flask flask_restful peewee
+flask flask_restful peewee
 ```
 
 #### Dependencies for running the frontend
 
 ```
-pip3 install flask requests
+flask requests
 ```
 
 ### Prepare database 
@@ -53,6 +52,49 @@ or use the ORM mapping to create the database, establish the database scheme and
 
 ```
 python3 db/dbmodel.py
+```
+
+
+## Testing in using a virtual enviroment ([virtualenv](https://virtualenv.pypa.io))
+
+1. Create a new virtual enviroment (Python3):
+
+```
+virtualenv -p python3 <desired-path>
+```
+
+2. Activate the enviroment.
+
+```
+source <desired-path>/bin/activate 
+```
+
+3. Install the required dependencies:
+
+```
+pip3 install flask flask_restful peewee requests
+```
+
+4. Create a fresh database using the ORM approach.
+
+```
+python3 db/dbmodel.py
+```
+
+5. Start back- and frontend servers
+
+```
+python3 app_backend.py # listens on 8001
+python3 app_frontend.py # listens on 8002
+```
+
+6. Start your webbrowser and navigate to [http://localhost:8002](http://localhost:8002)
+
+
+7. Deactivate virtual enviroment
+
+```
+deactivate
 ```
 
 ## Screenshots 
