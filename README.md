@@ -28,13 +28,13 @@ CREATE TABLE users (
 
 This solution relies on [Flask](https://flask.palletsprojects.com/en/3.0.x/) and [Peewee ORM](https://docs.peewee-orm.com/en/latest/) and was implemented using Python 3.9.6. Flask is used for serverside functions and listening on ports 8001 (backend server) and 8002 (frontend server).
 
-#### Dependencies for running the backend
+#### Dependencies (Python packages) for running the backend
 
 ```
 flask flask_restful peewee
 ```
 
-#### Dependencies for running the frontend
+#### Dependencies (Python packages) for running the frontend
 
 ```
 flask requests
@@ -118,6 +118,8 @@ Process of creating a new user:
 ![Filled user creation form](screenshots/005_BLHA_CreateNewUser.png)
 
 ![Updated user list](screenshots/006_BLHA_UpdatedUserList.png)
+
+And after the user has logged out:
 
 ![User logout](screenshots/007_BLHA_Logout.png)
 
