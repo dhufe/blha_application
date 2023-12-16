@@ -3,70 +3,75 @@ from flask_restful import Resource, Api, reqparse
 from flask import g
 from peewee import *
 
-
-appbe = Flask ( __name__ )
+appbe = Flask(__name__)
 appbe.config.from_object(__name__)
 api = Api(appbe)
 
-
 DATABASE = 'database.db'
-PORT     = 8001
-DEBUG    = True
+PORT = 8001
+DEBUG = True
 
+db = SqliteDatabase(DATABASE)
 
-db = SqliteDatabase( DATABASE )
 
 # Database model for user entries
 
 class Users(Model):
-   # peewee generates the id automatically as primary key
-   #   id = IntegerField( unique=True, primary_key = True )
-   username = CharField()
-   password = CharField()
+    # peewee generates the id automatically as primary key
+    #   id = IntegerField( unique=True, primary_key = True )
+    username = CharField()
+    password = CharField()
 
-   class Meta:
-       database = db
+    class Meta:
+        database = db
 
-def getUserList():
-    rows = list(Users.select().dicts()) 
+
+def getuserlist():
+    rows = list(Users.select().dicts())
     return rows
 
-def insertUser ( username, password ):
-    handle = Users ( username = username, password = password )
+
+def insertuser(username, password):
+    handle = Users(username=username, password=password)
     handle.save()
     return handle
 
 
 parser = reqparse.RequestParser()
 
+
 class UserList(Resource):
-    def get(self):
-        return getUserList()
+    @staticmethod
+    def get():
+        return getuserlist()
+
 
 class UserCreate(Resource):
-    def post(self):
-        parser.add_argument( "username" )
-        parser.add_argument( "password" )
+    @staticmethod
+    def post():
+        parser.add_argument("username")
+        parser.add_argument("password")
 
         args = parser.parse_args()
 
-        insertUser ( args["username"], args["password"] )
+        insertuser(args["username"], args["password"])
 
         return 201
 
-api.add_resource(UserList, '/users/' )
 
-api.add_resource(UserCreate, '/create/' )
+api.add_resource(UserList, '/users/')
+api.add_resource(UserCreate, '/create/')
 
 if __name__ == '__main__':
-    appbe.run( debug = DEBUG, port = PORT )
-    
+    appbe.run(debug=DEBUG, port=PORT)
+
 
 @appbe.before_request
 def before_request():
-    g.db = database
+    g.db = db
     g.db.connect()
 
+
 @appbe.after_request
-def after_request(response):
+def after_request():
     g.db.close()
