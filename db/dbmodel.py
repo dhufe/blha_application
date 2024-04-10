@@ -12,7 +12,7 @@
 
 from peewee import *
 
-db = SqliteDatabase('database.db')
+db = SqliteDatabase('app/database.db')
 
 # Database model for user entries
 class Users(Model):
