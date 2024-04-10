@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  python-backend:
+    container_name: AppBackend
+    image: python:blha_app:latest
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+#  python-frontend:
+#    container_name: AppFrontend
+#    image:
+#    environment:
+#      - GIT_REPOSITORY=https://github.com/David-Lor/Python-HelloWorld
+#      - APP_NAME=HelloWorldApp
+#      - GIT_BRANCH=master
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#      - /etc/timezone:/etc/timezone:ro

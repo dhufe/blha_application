@@ -9,7 +9,7 @@ import requests
 
 
 # config part
-PORT = 8002
+PORT = 8080
 DEBUG = True
 SECRET_KEY = 'hin6bab8ge25*r=x&amp;+5$0kn=-#log$pt^#@vrqjld!^2ci@g*b'
 BACKEND_URL = 'http://127.0.0.1:8001/users/'
@@ -85,7 +85,7 @@ def create():
         payload = {'username': request.form['username'], 'password': request.form['password']}
         header = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-        requests.post('http://127.0.0.1:8001/create/', json=payload, headers=header)
+        requests.post('http://backend:8001/create/', json=payload, headers=header)
         return redirect(url_for('homepage'))
 
     return render_template('create.html')

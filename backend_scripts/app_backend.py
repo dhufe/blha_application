@@ -63,7 +63,7 @@ api.add_resource(UserList, '/users/')
 api.add_resource(UserCreate, '/create/')
 
 if __name__ == '__main__':
-    appbe.run(debug=DEBUG, port=PORT)
+    appbe.run(host="0.0.0.0", port=PORT)
 
 
 @appbe.before_request

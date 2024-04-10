@@ -1,0 +1,22 @@
+FROM python:latest
+ARG BUILD_DATE
+
+LABEL build_version="Build-date:- ${BUILD_DATE}"
+LABEL maintainer="Daniel Hufschläger"
+
+COPY frontend-scripts/app_frontend.py ./app/
+COPY static/* ./app/static/
+COPY templates/* ./app/templates/
+COPY requirements.txt ./app/
+COPY frontend-scripts/entrypointfe.sh ./app/entrypoint.sh
+
+RUN pip install --upgrade --no-cache-dir pip && \
+    pip install --no-cache-dir -r ./app/requirements.txt
+
+#RUN chmod +x ./app/entrypoint.sh
+
+ENV no_proxy="localhost,127.0.0.1"
+
+EXPOSE 8080
+ENTRYPOINT ["python", "./app/app_frontend.py"]
+#ENTRYPOINT ["./app/entrypoint.sh"]
