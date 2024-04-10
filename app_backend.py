@@ -7,9 +7,9 @@ appbe = Flask(__name__)
 appbe.config.from_object(__name__)
 api = Api(appbe)
 
-DATABASE = 'database.db'
+DATABASE = 'app/database.db'
 PORT = 8001
-DEBUG = True
+DEBUG = False
 
 db = SqliteDatabase(DATABASE)
 

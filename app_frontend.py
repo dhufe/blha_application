@@ -92,4 +92,4 @@ def create():
 
 
 if __name__ == '__main__':
-    appfe.run(debug=DEBUG, port=PORT)
+    appfe.run(host="0.0.0.0", port=PORT)
