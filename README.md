@@ -101,12 +101,33 @@ steffi - gru3n
 torsten - 5chw4rz
 ```
 
-
 7. Deactivate virtual enviroment
 
 ```
 deactivate
 ```
+## Using Podman for container solutions
+
+```
+# build images 
+podman build --tag python:blha_appfe -f .\Dockerfile_Frontend .
+podman build --tag python:blha_appbe -f .\Dockerfile_Backend .
+
+# create and pod and exposing 8080 on 8080
+podman pod create --name blha_app_pod -p 8080:8080
+
+# create containers in the pod 
+podman run -d --restart=always \
+	--name blha_app_backend \
+	--pod=blha_app_pod \
+	 python:blha_appbe 
+	
+podman run -d --restart=always \
+	--name blha_app_frontend \
+	--pod=blha_app_pod \
+	python:blha_appfe 
+```
+
 
 ## Screenshots 
 
